@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пости</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Список постів</h1>
+        </header>
+        <section class="form-section">
+            <form action="/add" method="post" enctype="multipart/form-data">
+                <textarea name="text" placeholder="Введіть текст поста"></textarea><br>
+                <input type="file" name="image" class="file-input"><br>
+                <button type="submit" class="btn add-btn">Додати пост</button>
+            </form>
+        </section>
+        <hr>
+        <section class="posts-section">
+            {% for post in posts %}
+                <div class="post">
+                    <p class="post-date"><strong>Дата:</strong> {{ post.date_posted }}</p>
+                    <p class="post-text">{{ post.text }}</p>
+                    {% if post.image %}
+                        <img src="{{ post.image }}" alt="Post Image" class="post-image"><br>
+                    {% endif %}
+                    <form action="{{ url_for('delete_post', post_id=post.id) }}" method="post" class="delete-form">
+                        <button type="submit" class="btn delete-btn">Видалити</button>
+                    </form>
+                </div>
+                <hr>
+            {% endfor %}
+        </section>
+    </div>
+</body>
+</html>
